@@ -26,39 +26,47 @@ import java.util.Scanner;
 
 public class atmAssignment {
     public void printAtm(){
-        int balance = 10000;
-        Scanner myObj = new Scanner(System.in);  // Create a Scanner object
-        System.out.print("Enter the Withdrawal amount: "); // Prints prompt message on screen of the same line
-        int N = myObj.nextInt();  // Reads integer from user
+        Scanner scanner = new Scanner(System.in);
 
-        if (N % 100 == 0){
-            if(N <= balance){
-                int count_100 = 0;
-                int count_500 = 0;
-                int count_2000 = 0;
+        // Initialize balance
+        int balance = 5000;  // Kshs.
 
-                int remaining_amount = N;
+        System.out.println("Welcome to Simple ATM");
+        System.out.println("Your balance: Kshs. " + balance);
 
-                count_2000 = remaining_amount / 2000;
-                remaining_amount = remaining_amount % 2000;
+        // Get withdrawal amount
+        System.out.print("Enter amount to withdraw: Kshs. ");
+        int amount = scanner.nextInt();
 
-                count_500 = remaining_amount / 500;
-                remaining_amount = remaining_amount % 500;
+        // Check if amount is valid
+        if (amount <= 0) {
+            System.out.println("Invalid amount. Amount must be positive.");
+        } else if (amount % 100 != 0) {
+            System.out.println("Amount must be divisible by 100.");
+        } else if (amount > balance) {
+            System.out.println("Insufficient balance. Your balance is Kshs. " + balance);
+        } else {
+            // Process the withdrawal
+            balance = balance - amount;
+            System.out.println("Withdrawal successful!");
+            System.out.println("New balance: Kshs. " + balance);
 
-                count_100 = remaining_amount / 100;
-                remaining_amount = remaining_amount % 100;
+            // Calculate notes to give
+            int notes2000 = amount / 2000;
+            amount = amount % 2000;
 
+            int notes500 = amount / 500;
+            amount = amount % 500;
 
-                System.out.println("Withdrawal successful");
-                System.out.println("100 rupee notes: " + count_100);
-                System.out.println("500 rupee notes: " + count_500);
-                System.out.println("2000 rupee notes: " + count_2000);
+            int notes100 = amount / 100;
 
-            }else{
-                System.out.println("Insufficient balance. Your balance is: " + balance);
-            }
-        } else{
-            System.out.println("Invalid amount. Amount must be divisible by 100");
+            // Display notes
+            System.out.println("Please take your cash:");
+            System.out.println("Kshs. 2000 notes: " + notes2000);
+            System.out.println("Kshs. 500 notes: " + notes500);
+            System.out.println("Kshs. 100 notes: " + notes100);
         }
+
+        scanner.close();
     }
 }
